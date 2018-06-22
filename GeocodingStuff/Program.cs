@@ -26,27 +26,9 @@ namespace GeocodingStuff
             
             IList<string> locations = GeoUtil.ReadLocationsFromFile(_config.InFile);
 
-            processLocations(locations);
+            new ReverseGeocoding().ProcessLocations(_config, locations);
         }
 
-        static async Task processLocations(IList<string> locations)
-        {
-            Dictionary<string, string> revGeocodingResults = new Dictionary<string, string>();
-            List<string> locationsRevGeocoded = new List<string>();
-            
-            foreach(var location in locations)
-            {
-                Uri url = new Uri(GeoUtil.GenerateUrlFromLatLong(_config.UrlTemplate, location, _config.ApiKey));
-                string revGeocodingResult = await ReverseGeocoding.FetchAsync(url);
-                
-                // prepend the queried lat-long to the resultset -->
-                string adjustedRevGeocodingResult = $"{{\r\n\"queried_location\":\"{location}\",\r\n" 
-                                                    + revGeocodingResult.Substring(1);
-                
-                revGeocodingResults.Add(location, revGeocodingResult);
-                locationsRevGeocoded.Add(revGeocodingResult);
-                File.AppendAllText(_config.OutFile, "\r\n" + adjustedRevGeocodingResult);
-            }            
-        }
+
     }
 }

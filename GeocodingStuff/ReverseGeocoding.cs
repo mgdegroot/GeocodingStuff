@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -6,11 +8,12 @@ namespace GeocodingStuff
 {
     public class ReverseGeocoding
     {
-        public static async Task<string> FetchAsync(Uri URL)
+        public IHttpHandler Client { get; set; } = new HttpHandler();
+        
+        public async Task<string> FetchAsync(Uri URL)
         {
-            HttpClient client = new HttpClient();
             
-            HttpResponseMessage response = client.GetAsync(URL).Result;
+            HttpResponseMessage response = Client.GetAsync(URL).Result;
             string result = string.Empty;
 
 //            var s = JsonConvert.DeserializeObject(result);
@@ -26,7 +29,25 @@ namespace GeocodingStuff
 
             return result;
         }
-
-        public async Task<string> FetchAsync(string URL) => await FetchAsync(new Uri(URL));
+        
+        public async Task ProcessLocations(GeoUtil.Config config, IList<string> locations)
+        {
+//            Dictionary<string, string> revGeocodingResults = new Dictionary<string, string>();
+            List<string> locationsRevGeocoded = new List<string>();
+            
+            foreach(var location in locations)
+            {
+                Uri url = new Uri(GeoUtil.GenerateUrlFromLatLong(config.UrlTemplate, location, config.ApiKey));
+                string revGeocodingResult = await FetchAsync(url);
+                
+                // prepend the queried lat-long to the resultset -->
+                string adjustedRevGeocodingResult = $"{{\r\n\"queried_location\":\"{location}\",\r\n" 
+                                                    + revGeocodingResult.Substring(1);
+                
+//                revGeocodingResults.Add(location, revGeocodingResult);
+                locationsRevGeocoded.Add(revGeocodingResult);
+                File.AppendAllText(config.OutFile, "\r\n" + adjustedRevGeocodingResult);
+            }            
+        }
     }
 }

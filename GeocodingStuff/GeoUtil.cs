@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
 using Newtonsoft.Json;
 
 namespace GeocodingStuff
 {
-    public static class GeoUtil
+    public class GeoUtil
     {
         public const string DFLT_CONFIG_PATH = "config.json";
         
@@ -34,7 +35,7 @@ namespace GeocodingStuff
         {
             if (!File.Exists(path))
             {
-                throw new FileNotFoundException($"File {path} not found");
+                throw new FileNotFoundException($"File {path} not found.");
             }
             return JsonConvert.DeserializeObject<Config>(File.ReadAllText(path));
         }
@@ -46,6 +47,15 @@ namespace GeocodingStuff
             public string UrlTemplate { get; set; }
             public string InFile { get; set; }
             public string OutFile { get; set; }
+
+            public override string ToString() => $"[ConfigFile: {ConfigFile}; ApiKey: {ApiKey}; " +
+                                                 $"UrlTemplate: {UrlTemplate}; InFile: {InFile}; " +
+                                                 $"OutFile: {OutFile};]";
+
+            public override int GetHashCode() => ToString().GetHashCode();
+
+            public override bool Equals(object obj) => obj?.ToString() == this.ToString();
+
         }
         
     }

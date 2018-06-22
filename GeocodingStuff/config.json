@@ -1,0 +1,6 @@
+﻿{
+  "ApiKey": "<api key>",
+  "UrlTemplate": "https://maps.googleapis.com/maps/api/geocode/json?latlng={0}&key={1}",
+  "InFile":"/tmp/test/test_in.txt",
+  "OutFile": "/tmp/test/test_out.json"
+}

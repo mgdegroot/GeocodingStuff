@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeocodingStuff", "GeocodingStuff\GeocodingStuff.csproj", "{3ECD7BD0-9D84-4521-B83E-43AC2D699DF2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeocodingStuff.Test", "GeocodingStuff.Test\GeocodingStuff.Test.csproj", "{965DA0D4-017B-4483-87BC-DD0D959F2719}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{3ECD7BD0-9D84-4521-B83E-43AC2D699DF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3ECD7BD0-9D84-4521-B83E-43AC2D699DF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3ECD7BD0-9D84-4521-B83E-43AC2D699DF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{965DA0D4-017B-4483-87BC-DD0D959F2719}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{965DA0D4-017B-4483-87BC-DD0D959F2719}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{965DA0D4-017B-4483-87BC-DD0D959F2719}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{965DA0D4-017B-4483-87BC-DD0D959F2719}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
